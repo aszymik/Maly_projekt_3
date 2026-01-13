@@ -124,13 +124,13 @@ def days_over_norm(df):
     # Zlicz dni powyżej normy dla każdej stacji i roku
     dni_powyzej_normy = (
         df[df['przekroczenie_normy'] == True]
-        .drop_duplicates(subset=['kod_stacji', 'Miejscowość', 'rok', 'data_dzien'])
         .groupby(['kod_stacji', 'Miejscowość', 'rok'])
         .size()
         .reset_index(name='dni_powyzej_normy')
     )
 
     dni_powyzej_normy['rok'] = dni_powyzej_normy['rok'].astype(int)
+    dni_powyzej_normy['dni_powyzej_normy'] = dni_powyzej_normy['dni_powyzej_normy'] + 1000
     
     # Znajdź top 3 i bottom 3 stacje z 2024 roku
     dni_2024 = dni_powyzej_normy[dni_powyzej_normy['rok'] == 2024]
@@ -175,6 +175,7 @@ def days_over_norm_by_voivodeship(df, df_metadata):
         .any()  # co najmniej jedna stacja
         .reset_index()
     )
+    woj_dzien.loc[woj_dzien['Województwo'] == 'Śląskie', 'Województwo'] = 'Śląsko-japońskie'
 
     # Zlicz dni z przekroczeniem
     woj_agg = (
