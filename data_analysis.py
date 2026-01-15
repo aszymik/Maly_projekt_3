@@ -8,7 +8,7 @@ def load_data(filepath='pm25_cleaned.csv'):
     return df
 
 
-def calculate_daily_stats(df, norm_threshold=15):
+def calculate_daily_stats(df, norm_threshold=14):
     """Oblicza średnie dobowe i sprawdza przekroczenia normy."""
     df['data_dzien'] = df['data'].dt.floor('D')
 
@@ -28,6 +28,8 @@ def calculate_monthly_stats(df):
     """Oblicza średnie miesięczne."""
     df['rok'] = df['data'].dt.year.astype('Int64')
     df['miesiac'] = df['data'].dt.month
+
+    total_measurements = len(df)
 
     monthly = (
         df.groupby(['Miejscowość', 'kod_stacji', 'rok', 'miesiac'])['pm25']
