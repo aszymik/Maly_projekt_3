@@ -8,7 +8,7 @@ def load_data(filepath='pm25_cleaned.csv'):
     return df
 
 
-def calculate_daily_stats(df, norm_threshold=14):
+def calculate_daily_stats(df, norm_threshold=15):
     """Oblicza średnie dobowe i sprawdza przekroczenia normy."""
     df['data_dzien'] = df['data'].dt.floor('D')
 
